@@ -16,8 +16,8 @@ import com.example.hw04_gymlog_v300.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String tag = "GYMLOG";
     ActivityMainBinding binding;
+    public static final String TAG = "DAG_GYMLOG";
     String exercise = "";
     double weight = 0.0;
     int reps = 0;

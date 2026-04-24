@@ -4,13 +4,8 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.hw04_gymlog_v300.database.GymLogRepository;
 import com.example.hw04_gymlog_v300.database.entities.GymLog;
@@ -26,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     String exercise = "";
     double weight = 0.0;
     int reps = 0;
+    //TODO: add login info
+    int loggedInUserID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        binding.exerciseInputEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateDisplay();
+            }
+        });
 
     }
 
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         if (exercise.isEmpty()) {
             return;
         }
-        GymLog log = new GymLog(exercise, weight, reps);
+        GymLog log = new GymLog(exercise, weight, reps, loggedInUserID);
         repository.insertGymLog(log);
     }
 

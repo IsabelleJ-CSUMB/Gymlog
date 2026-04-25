@@ -12,6 +12,10 @@ import java.util.List;
 
 @Dao
 public interface UserDAO {
+     @Query("SELECT * from " + GymLogDatabase.USER_TABLE + " WHERE username == :username")
+     User getUserByUsername(String username);
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     //... allows to insert multiple users at a time EX: an array of users, very useful
     void insert(User... user);

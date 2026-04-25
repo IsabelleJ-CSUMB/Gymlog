@@ -41,7 +41,7 @@ public class GymLogRepository {
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
-            Log.i(MainActivity.TAG, "Problemt getting GymLogRepository, thread error");
+            Log.i(MainActivity.TAG, "Problem getting GymLogRepository, thread error");
         }
         return null;
     }
@@ -58,7 +58,7 @@ public class GymLogRepository {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            Log.i(MainActivity.TAG, "Problem when getting al GymLogs in the repo");
+            Log.i(MainActivity.TAG, "Problem when getting all GymLogs in the repo");
         }
         return null;
     }
@@ -70,10 +70,25 @@ public class GymLogRepository {
         });
     }
 
-    public void insertUsr(User... user) {
+    public void insertUser(User... user) {
         GymLogDatabase.databaseWriteExecutor.execute(() ->
         {
             userDAO.insert(user);
         }        );
+    }
+
+    public User getUserByUsername(String username) {
+        Future<User> future = GymLogDatabase.databaseWriteExecutor.submit(new Callable<User>() {
+            @Override
+            public User call() throws Exception {
+                return userDAO.getUserByUsername(username);
+            }
+        });
+        try {
+            future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(MainActivity.TAG, "Problem getting user by username");
+        }
+        return null;
     }
 }

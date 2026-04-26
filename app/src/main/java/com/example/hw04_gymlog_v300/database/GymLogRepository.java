@@ -3,11 +3,14 @@ package com.example.hw04_gymlog_v300.database;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.hw04_gymlog_v300.MainActivity;
 import com.example.hw04_gymlog_v300.database.entities.GymLog;
 import com.example.hw04_gymlog_v300.database.entities.User;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -46,11 +49,11 @@ public class GymLogRepository {
         return null;
     }
 
-    public ArrayList<GymLog> getAllLogs() {
+    public List<GymLog> getAllLogs() {
         Future<ArrayList<GymLog>> future  = GymLogDatabase.databaseWriteExecutor.submit(
                 new Callable<ArrayList<GymLog>>() {
             @Override
-            public ArrayList<GymLog> call() throws Exception {
+             public ArrayList<GymLog> call() throws Exception {
                 return (ArrayList<GymLog>) gymLogDAO.getAllRecords();
             }
         });
@@ -77,18 +80,29 @@ public class GymLogRepository {
         }        );
     }
 
-    public User getUserByUsername(String username) {
-        Future<User> future = GymLogDatabase.databaseWriteExecutor.submit(new Callable<User>() {
-            @Override
-            public User call() throws Exception {
-                return userDAO.getUserByUsername(username);
-            }
-        });
+    public LiveData<User> getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
+    }
+
+    public LiveData<User> getUserByUserID(int userID) {
+        return userDAO.getUserByUserID(userID);
+    }
+
+    public ArrayList<GymLog> getAllLogsByUserID(int userID) {
+        Future<ArrayList<GymLog>> future  = GymLogDatabase.databaseWriteExecutor.submit(
+                new Callable<ArrayList<GymLog>>() {
+                    @Override
+                    public ArrayList<GymLog> call() throws Exception {
+                        return (ArrayList<GymLog>) gymLogDAO.getAllLogsByUserID(userID);
+                    }
+                });
         try {
-            future.get();
+            return future.get();
         } catch (InterruptedException | ExecutionException e) {
-            Log.i(MainActivity.TAG, "Problem getting user by username");
+            e.printStackTrace();
+            Log.i(MainActivity.TAG, "Problem when getting all GymLogs in the repo");
         }
         return null;
+
     }
 }

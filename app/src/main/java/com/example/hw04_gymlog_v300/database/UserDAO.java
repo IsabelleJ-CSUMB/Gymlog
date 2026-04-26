@@ -1,5 +1,6 @@
 package com.example.hw04_gymlog_v300.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -13,7 +14,10 @@ import java.util.List;
 @Dao
 public interface UserDAO {
      @Query("SELECT * from " + GymLogDatabase.USER_TABLE + " WHERE username == :username")
-     User getUserByUsername(String username);
+     LiveData<User> getUserByUsername(String username);
+
+    @Query("SELECT * from " + GymLogDatabase.USER_TABLE + " WHERE id == :userID")
+    LiveData<User> getUserByUserID(int userID);
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -24,7 +28,7 @@ public interface UserDAO {
     void delete(User user);
 
     @Query("SELECT * FROM " + GymLogDatabase.USER_TABLE + " ORDER BY username")
-    List<User> getAllUsers();
+    LiveData<List<User>> getAllUsers();
 
     @Query("DELETE FROM " + GymLogDatabase.USER_TABLE)
     void deleteAll();

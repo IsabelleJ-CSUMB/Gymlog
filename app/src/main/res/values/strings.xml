@@ -10,4 +10,6 @@
     <string name="nothing_to_show_time_to_hit_the_gym">Nothing to show, time to hit the gym!</string>
     <string name="login_welcome">Welcome to the Gymlog!\nPlease Sign in</string>
     <string name="password">Password</string>
+    <string name="preference_file_key">daclkinkPreferenceFileNameGymLog</string>
+    <string name="preference_userid_key">daclkinkPreferenceUserIDKeyGymLog</string>
 </resources>

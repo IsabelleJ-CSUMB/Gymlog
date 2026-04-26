@@ -2,10 +2,8 @@ package com.example.hw04_gymlog_v300;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.contentcapture.ContentCaptureCondition;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +17,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private GymLogRepository repository;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void verifyUser() {
         String username = binding.usernameLoginEditText.getText().toString();
-
         if (username.isEmpty()) {
             toastMaker("Put in your username silly");
             return;
@@ -49,10 +45,6 @@ public class LoginActivity extends AppCompatActivity {
             if (user != null) {
                 String password = binding.passwordLoginEditText.getText().toString();
                 if (password.equals(user.getPassword())) {
-//                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(MainActivity.SHARED_PREFERENCE_USERID_KEY, Context.MODE_PRIVATE);
-//                    SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-//                    sharedPreferencesEditor.putInt(MainActivity.SHARED_PREFERENCE_USERID_KEY, user.getId());
-//                    sharedPreferencesEditor.apply();
                     startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId()));
                 } else {
                     toastMaker("Invalid password");

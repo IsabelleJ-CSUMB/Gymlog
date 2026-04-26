@@ -51,3 +51,8 @@ dependencies {
     implementation(libs.room.runtime)
     annotationProcessor( libs.room.compiler)
 }
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
